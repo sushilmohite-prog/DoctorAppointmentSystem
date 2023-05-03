@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body >
+
+<section>
+  <div class="container-fluid row py1">
+
+    <form class="col-md-9 p-3" th:action="@{/doctor_register}" method="post" th:object="${doctor}">
+
+      <h2 style="text-align: center; padding: 1rem; color: red;">Doctor Registration Form</h2>
+
+      <div class="row">
+
+
+
+        <div class="col-md-4 offset-md-2">
+          <h3>Registration Type</h3>
+        </div>
+
+
+
+        <div class="col-md-4 mb-4">
+
+          <select class="form-select" name ="registrationType" th:classappend="${#fields.hasErrors('registrationType') ? 'is-invalid': '' }" th:value="${doctor.registrationType}" aria-label="Default select example">
+            <option selected value="">Please Select</option>
+            <option value="Clinic">Clinic</option>
+            <option value="Hospital">Hospital</option>
+            </select>
+            
+             <div class="invalid-feedback" th:each="e : ${#fields.errors('registrationType')}" th:text="${e}"></div>
+            
+        </div>
+
+        <hr>
+        <h3 class="offset-md-2">Doctor Details</h3>
+
+        <div class="col-md-4 offset-md-2">
+          <label for="exampleInputEmail1" class="form-label">First Name</label>
+          <input type="text" class="form-control" name="fname" th:classappend="${#fields.hasErrors('fname') ? 'is-invalid': '' }" th:value="${doctor.fname}"  id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('fname')}" th:text="${e}"></div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="exampleInputPassword1" class="form-label">Last Name</label>
+          <input type="text" class="form-control" name="lname" th:classappend="${#fields.hasErrors('lname') ? 'is-invalid': '' }" th:value="${doctor.lname}" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('lname')}" th:text="${e}"></div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="row">
+
+        <h3 class="offset-md-2"> Hospital/Clinic Address</h3>
+
+        <div class="col-md-8 offset-md-2">
+          <label for="exampleInputEmail1" class="form-label">Street Address</label>
+          <input type="text" class="form-control" name="streetAddress" th:value="${doctor.streetAddress}" th:classappend="${#fields.hasErrors('streetAddress') ? 'is-invalid': '' }"   id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('streetAddress')}" th:text="${e}"></div>
+        </div>
+
+        <div class="col-md-4 offset-md-2">
+          <label for="exampleInputPassword1" class="form-label">Landmark</label>
+          <input type="text" class="form-control" th:value="${doctor.landmark}" th:classappend="${#fields.hasErrors('landmark') ? 'is-invalid': '' }" name="landmark" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('landmark')}" th:text="${e}"></div>
+        </div>
+
+
+        <div class="col-md-4 ">
+          <label for="exampleInputPassword1" class="form-label">City</label>
+          <input type="text" class="form-control" name="city" th:value="${doctor.city}" th:classappend="${#fields.hasErrors('city') ? 'is-invalid': '' }" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('city')}" th:text="${e}"></div>
+        </div>
+
+
+
+        <div class="col-md-4 offset-md-2">
+          <label for="exampleInputPassword1" class="form-label">State</label>
+          <input type="text" class="form-control" name="state" th:value="${doctor.state}" th:classappend="${#fields.hasErrors('state') ? 'is-invalid': '' }" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('state')}" th:text="${e}"></div>
+        </div>
+
+
+        <div class="col-md-4 ">
+          <label for="exampleInputPassword1" class="form-label">Postal / Zip Code</label>
+          <input type="text" class="form-control" name="pin" th:value="${doctor.pin}" th:classappend="${#fields.hasErrors('pin') ? 'is-invalid': '' }" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('pin')}" th:text="${e}"></div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row">
+
+        <div class="col-md-4 offset-md-2">
+          <h3>Date of Birth</h3>
+          <input type="date" class="form-control" name ="dob" th:value="${doctor.dob}" th:classappend="${#fields.hasErrors('dob') ? 'is-invalid': '' }" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('dob')}" th:text="${e}"></div>
+        </div>
+
+
+        <div class="col-md-4 ">
+          <h3>Qualification</h3>
+          <select class="form-select" name="qualification" th:value="${doctor.qualification}" th:classappend="${#fields.hasErrors('qualification') ? 'is-invalid': '' }" aria-label="Default select example">
+            <option selected value="">Please Select</option>
+            <option value="Married">MBBS</option>
+            <option value="Single">HH</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Divorced">Divorced</option>
+          </select>
+          
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('qualification')}" th:text="${e}"></div>
+          
+        </div>
+
+
+        <div class="col-md-4 offset-md-2 ">
+          <h3>Specialization</h3>
+          <select class="form-select" name="specialiazation" th:value="${doctor.specialiazation}" th:classappend="${#fields.hasErrors('specialiazation') ? 'is-invalid': '' }" aria-label="Default select example">
+            <option selected value="">Please Select</option>
+            <option value="Married">Neurologist</option>
+            <option value="Single">Dentist</option>
+            <option value="Widowed">ENT</option>
+            <option value="Divorced">Oncologist</option>
+            <option value="Married">Cardiologist</option>
+            <option value="Single">Eye Specialist</option>
+            <option value="Widowed">Orthopedic</option>
+            <option value="Divorced">Gynecologist</option>
+            <option value="Widowed">Dermatologist</option>
+            <option value="Divorced">Opthalmologists</option>
+            <option value="Divorced">Other</option>
+          </select>
+          
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('specialiazation')}" th:text="${e}"></div>
+          
+        </div>
+
+      </div>
+
+      <hr>
+      <div class="row">
+
+        <div class="col-md-4 offset-md-2">
+          <h3>Email</h3>
+          <input type="email" name="email" th:value="${doctor.email}" class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid': '' }" placeholder="abc@example.com" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+        </div>
+
+        <div class="col-md-4">
+          <h3>Phone</h3>
+          <input type="text" name="phone" th:value="${doctor.phone}" class="form-control" th:classappend="${#fields.hasErrors('phone') ? 'is-invalid': '' }" id="exampleInputPassword1">
+          <div class="invalid-feedback" th:each="e : ${#fields.errors('phone')}" th:text="${e}"></div>
+        </div>
+
+        <div class="col-md-4 offset-md-2">
+          <h3>Password</h3>
+          <input type="password" name="password" th:classappend="${#fields.hasErrors('password') ? 'is-invalid': '' }" class="form-control" id="exampleInputPassword1">
+        	<div class="invalid-feedback" th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
+        </div>
+
+        <div class="col-md-4">
+          <h3>Verify Password</h3>
+          <input type="text" class="form-control" id="exampleInputPassword1">
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div>
+        <div class="row">
+          <h3 class="offset-md-2">Please Upload Your Id</h3>
+          <div class="col-md-8 offset-md-2">
+            <div class="input-group">
+              <input type="file" class="form-control" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                aria-label="Upload">
+                
+            </div>
+            <label for="exampleInputEmail1" class="form-label" style="color:red; font-size:10px; ">For Verification Purpose</label>
+            
+          </div>
+         
+
+        </div>
+
+      </div>
+
+
+
+
+      <hr>
+
+      <div class="mb-3 form-check offset-md-2 mt-4">
+        <input type="checkbox" name="agreement" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">I agree to terms & conditions</label>
+
+      </div>
+
+
+      <button type="submit" class="btn btn-primary offset-md-2">Submit</button>
+
+    </form>
+
+    <div class="col-md-3 border"></div>
+  </div>
+</section>
+</body>
+
+</html>

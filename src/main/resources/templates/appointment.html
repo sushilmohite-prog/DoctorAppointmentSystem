@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Appointments</title>
+</head>
+<body>
+
+<section class="py1">
+<div class="container-md ">
+<div class="row">
+    
+  
+  <div class="col-md-2 .offset-md-5"></div>
+  <div class="card" style="width: 70rem; ">
+  <div class="card-body">
+    <h5 class="card-title cardtitle" style="font-size:25px"><i class="fa-solid fa-calendar-check" style="color: #1e3050; padding-right: 2px;"></i> Book an Appointment</h5>
+    <h6 class="card-subtitle mt-2 mb-2 text-body-secondary" style="font-size:15px">The available data displayed in the pincode or district search is provided by the private and government hospitals.</h6>
+   
+   
+   <div class="dropbody">
+    <div class="dropdown">
+      <div class="select">
+        <span class="selected">State</span>
+          <div class="caret"></div>
+      </div>
+
+      <ul class="menu">
+        <li class="active">Frame</li>
+        <li>Sketch</li>
+      </ul>
+
+    </div>
+
+    <div class="dropdown" style="margin-left:3px;">
+      <div class="select">
+        <span class="selected">District</span>
+          <div class="caret"></div>
+      </div>
+
+      <ul class="menu">
+        <li class="active">Frame</li>
+        <li>Sketch</li>
+      </ul>
+
+    </div>
+
+    <button type="button" class="btn btn-lg btn-outline-primary mx-3" >Search</button>
+
+  </div>
+
+
+  </div>
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+//dropdown 
+const dropdowns= document.querySelectorAll('.dropdown');
+
+dropdowns.forEach(dropdown=>{
+  const select = dropdown.querySelector('.select');
+  const caret = dropdown.querySelector('.caret');
+  const menu = dropdown.querySelector('.menu');
+  const options = dropdown.querySelectorAll('.menu li');
+  const selected = dropdown.querySelector('.selected');
+  
+  
+  select.addEventListener('click',()=>{
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+  });
+
+  options.forEach(option=>{
+      option.addEventListener('click',()=>{
+          selected.innerText =option.innerText;
+          select.classList.remove('select-clicked');
+          caret.classList.remove('caret-rotate');
+          menu.classList.remove('menu-open');
+
+
+          options.forEach(option=>{
+              option.classList.remove('active');
+          });
+          option.classList.add('active');
+      });
+  });
+});
+
+//drop down end
+
+</script>
+
+</section>
+	
+	
+</body>
+</html>
