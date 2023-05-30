@@ -19,7 +19,7 @@ To run the Doctor Appointment Management System locally, follow these steps:
 1. Clone the repository:
 
    ```shell
-   git clone [https://github.com/your-username/doctor-appointment-management.git](https://github.com/sushilmohite-prog/DoctorAppointmentSystem.git)
+   git clone https://github.com/sushilmohite-prog/DoctorAppointmentSystem.git
    ```
 
 2. Import the project into your favorite IDE.
