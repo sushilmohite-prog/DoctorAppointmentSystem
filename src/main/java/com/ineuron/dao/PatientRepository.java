@@ -10,4 +10,7 @@ public interface PatientRepository extends JpaRepository<Patient,Integer>{
 	
 	@Query("select p from Patient p where p.email = :email")
 	public Patient getPatientByEmail(@Param("email")String email);
+	
+	@Query("select p from Patient p where p.patientId = :patientId")
+	public Patient getPatientById(@Param("patientId")int patientId);
 }

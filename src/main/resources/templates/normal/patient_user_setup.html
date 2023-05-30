@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+th:replace="~{normal/patientbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+
+</head>
+
+<body>
+	<section>
+		<div class="row">
+
+			<div class="container-fluid px-1 mx-auto">
+				<div class="row d-flex justify-content-center">
+					<div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+						<div class="card">
+							<div th:if="${session.message}"
+								th:classappend="${session.message.type}" class="alert"
+								role="alert">
+								<p th:text="${session.message.content}"></p>
+							</div>
+							<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+							<h3 class="text-center mb-5"
+								style="color: green; font-weight: bold;">User Settings</h3>
+							<h4 class="text-left" style="color: blue; font-weight: bold;">User
+								Details</h4>
+							<hr />
+							<form class="form-card"
+								th:action="@{/patient/update_user_patient}" method="post"
+								th:object="${patient}">
+
+
+
+								<div class="row justify-content-between text-left">
+									<div class="form-group col-sm-6 flex-column d-flex">
+										<label class="form-control-label " style="font-weight: bold;">First
+											name<span class="text-danger"> *</span>
+										</label> <input type="text" id="fname" name="fname"
+											placeholder="Enter your first name"
+											th:value="${patient.fname}">
+									</div>
+
+									<div class="form-group col-sm-6 flex-column d-flex">
+										<label class="form-control-label " style="font-weight: bold;">last
+											name<span class="text-danger"> *</span>
+										</label> <input type="text" id="lname" name="patientName"
+											placeholder="Enter your last name"
+											th:value="${patient.lname}">
+									</div>
+
+								</div>
+								<div class="row justify-content-between text-left">
+									<div class="form-group col-sm-6 flex-column d-flex">
+										<label class="form-control-label" style="font-weight: bold;">Phone
+											number<span class="text-danger"> *</span>
+										</label> <input type="text" id="mob" name="phone" placeholder=""
+											th:value="${patient.phone}">
+									</div>
+
+									<div class="form-group col-sm-6 flex-column d-flex">
+										<label class="form-control-label" style="font-weight: bold;">Patient
+											Username<span class="text-danger"> *</span>
+										</label> <input type="text" id="mob" name="email" placeholder=""
+											th:value="${patient.email}" readonly>
+									</div>
+
+								</div>
+
+								<div class="row justify-content-end">
+									<div class="form-group mt-4 col-sm-6">
+										<button type="submit" id="submitButton"
+											class="btn-block btn-success">Update Information</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+</body>
+
+</html>

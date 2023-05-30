@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+</head>
+<body class="formbody">
+
+	<section class="formlayout contact1 py1">
+		
+		<div class="container2" id="container">
+			<div class="form-container1 sign-up-container1">
+				<div class="signinform">
+					<h1 class="formh1">Registration</h1>
+					
+					<a th:href="@{/doctor-registration}"><button style="margin-top:1rem;" class="formbutton">Sign Up For Doctor</button></a>
+					<a th:href="@{/patient-registration}"><button style="margin-top:1rem;" class="formbutton">Sign Up For Patient</button></a>
+						
+				</div>
+			</div>
+			<div class="form-container1 sign-in-container1">
+				<form class="signinform" method="post" th:action="@{/dologin}">
+					<h1 class="formh1">User Login</h1>
+					
+					
+					
+					
+					<div class="social-container1">
+						<a href="#" class="social1"><i class="fab fa-facebook-f"></i></a> 
+						<a href="#" class="social1"><i class="fab fa-google-plus-g"></i></a>
+						
+					</div>
+					<span class="formspan">or use your account</span> 
+					<input  class="forminput" type="email" name="username"	placeholder="Email" /> 
+					<input class="forminput" type="password" name="password" placeholder="Password" /> <a href="#">Forgot your password?</a>
+						
+					<button style="margin-top:1rem;" class="formbutton" type="submit">Sign In</button>
+					
+					<div th:if="${param.error}" class="font-weight-bold" style="color:red;margin-top:1rem;">
+						Invalid Credentials
+					</div>
+					
+					<div th:if="${param.logout}" class="font-weight-bold" style="color:red; margin-top:1rem;">
+						You have been logged Out 
+					</div>
+					
+				</form>
+			</div>
+			<div class="overlay-container1">
+				<div class="overlay1">
+					<div class="overlay-panel1 overlay-left1">
+						<h1 class="formh1">Welcome Back To Minute Visit!</h1>
+						<p class="formp">To keep connected with us please login with your personal
+							info</p>
+						<button class="formbutton ghost1" id="signIn">Sign In</button>
+					</div>
+					<div class="overlay-panel1 overlay-right1">
+						<h1 class="formh1">Welcome Back To Minute Visit!</h1>
+						<p class="formp">To keep connected with us please login with your personal
+							info</p>
+						<a th:href="@{/doctor-registration}"><button style="margin-top:1rem;" class="formbutton">Sign Up For Doctor</button></a>
+					<a th:href="@{/patient-registration}"><button style="margin-top:1rem;" class="formbutton">Sign Up For Patient</button></a>
+					
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	
+
+	</section>
+	<!-- MDB -->
+	
+</body>
+</html>

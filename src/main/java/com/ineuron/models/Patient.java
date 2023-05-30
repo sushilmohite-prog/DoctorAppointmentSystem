@@ -10,7 +10,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -48,6 +48,8 @@ public class Patient {
 	
 	@NotBlank(message="Please enter Date of Birth !!")
 	private String dob;
+	
+	@NotBlank(message="Please select appropriate value !!")
 	private String maritalStatus;
 	
 	@NotBlank(message="Email required !!")
@@ -60,18 +62,23 @@ public class Patient {
 	
 	@NotBlank(message="Please enter your contact !!")
 	@Column(unique= true)
-	@Pattern(regexp="^[89][0-9]{9}" ,message="Please enter valid phone number !!")
 	private String phone;
 	
-	
+	private String gender;
+	@NotBlank(message="Please select appropriate value !!")
 	private String medicalHistory;
+	@NotBlank(message="Please select appropriate value !!")
 	private String familyHistory;
+	
+	@NotBlank(message="Please select appropriate value !!")
 	private String alcoholUse;
+	@NotBlank(message="Please select appropriate value !!")
 	private String tobaccoUse;
 	@NotBlank(message="Emergency details are required !!")
 	private String emergencyName;
     @NotBlank(message="Emergency contact required")
 	private String emergencyContact;
+    @NotBlank(message="Please select appropriate value !!")
 	private String emergencyRelation;
 	
 	
@@ -96,6 +103,22 @@ public class Patient {
 	public int getPatientId() {
 		return patientId;
 	}
+	public String getGender() {
+		return gender;
+	}
+
+
+
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+
+
 	public String getStreetAddress() {
 		return streetAddress;
 	}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+th:replace="~{normal/patientbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+
+</head>
+
+<body>
+	<section>
+					<div class="row text-center">
+						<div class="col-sm-3"></div>
+						<div
+							class="col-sm-6 col-sm-offset-3 shadow p-3 mb-5 bg-white rounded">
+							<br> <br>
+							<h1 style="color: #0fad00; font-weight: bold">Appointment
+								Booked Successfully</h1>
+							<h2 th:text="${patient.fname}+' '+${patient.lname}"> </h2>
+							<p style="font-size: 20px; color: #5C5C5C;">Thank you for
+								Thank you for booking appointment. Wait for 3 seconds it will 
+								automatically redirects to patient dashboard</p>
+							<br>
+						</div>
+
+					</div>
+					
+					<script>
+					history.pushState(null, null, location.href);
+			        window.onpopstate = function() {
+			            history.go(1);
+			        };
+				
+		        setTimeout(function() {
+		            window.location.href = "/patient/patient-dashboard"; 
+		       			 }, 3000); 
+					
+					</script>
+					
+			</section>		
+			
+	
+</body>
+
+</html>

@@ -1,218 +1,482 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{base::layout(~{::section})}">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<title>Account registration form</title>
+<link
+	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'
+	rel='stylesheet' type='text/css'>
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+	rel="stylesheet">
+
 </head>
+<body>
 
-<body >
+	<section>
 
-<section>
-  <div class="container-fluid row py1">
+		<style>
+form, input, select, p {
+	padding: 0;
+	margin: 0;
+	outline: none;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 14px;
+	color: #666;
+}
 
-    <form class="col-md-9 p-3" th:action="@{/doctor_register}" method="post" th:object="${doctor}">
+h1 {
+	margin: 0;
+	font-weight: 400;
+}
 
-      <h2 style="text-align: center; padding: 1rem; color: red;">Doctor Registration Form</h2>
+.form-h3 {
+	margin: 12px 0;
+	color: #8ebf42;
+	font-weight:bold;
+}
 
-      <div class="row">
+.form-main-block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+}
+
+form {
+	width: 100%;
+	padding: 20px;
+}
+
+.form-fieldset {
+	border: none;
+	border-top: 1px solid #8ebf42;
+}
+
+.account-details, .personal-details {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.account-details>div, .personal-details>div>div {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.account-details>div, .personal-details>div, input, label {
+	width: 100%;
+}
+
+label {
+	padding: 0 5px;
+	text-align: right;
+	vertical-align: middle;
+	font-weight:bold;
+}
+
+input {
+	padding: 5px;
+	vertical-align: middle;
+}
+
+ul {
+	list-style-type: none;
+}
+
+li div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.checkbox {
+	margin-bottom: 5px;
+}
+
+select, .children, .gender, .bdate-block {
+	width: calc(100% + 26px);
+	padding: 5px 0;
+}
+
+select {
+	background: transparent;
+}
+
+.gender input {
+	width: auto;
+}
+
+.gender label {
+	padding: 0 5px 0 0;
+}
+
+.bdate-block {
+	display: flex;
+	justify-content: space-between;
+}
+
+.birthdate select.day {
+	width: 35px;
+}
+
+.birthdate select.mounth {
+	width: calc(100% - 94px);
+}
+
+.birthdate input {
+	width: 38px;
+	vertical-align: unset;
+}
+
+.checkbox input, .children input {
+	width: auto;
+	margin: -2px 10px 0 0;
+}
+
+.checkbox a {
+	color: #8ebf42;
+}
+
+.checkbox a:hover {
+	color: #82b534;
+}
+
+.reg-btn {
+	width: 100%;
+	padding: 10px 0;
+	margin: 10px auto;
+	border-radius: 5px;
+	border: none;
+	background: #8ebf42;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+}
+
+.error-div .err {
+	margin-left: 16rem;
+}
+
+.reg-btn:hover {
+	background: #82b534;
+}
+
+@media ( min-width : 568px) {
+	.account-details>div, .personal-details>div {
+		width: 50%;
+	}
+	label {
+		width: 40%;
+	}
+	input {
+		width: 60%;
+	}
+	select, .children, .gender, .bdate-block {
+		width: calc(60% + 16px);
+	}
+}
+</style>
+
+		<div class="container py1">
+			<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+ 				 <p th:text="${session.message.content}"></p>
+ 				 
+			</div>
+			<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+			
+			<div class="form-main-block">
+			
+				<form th:action="@{/doctor_register}" id="doctorForm" method="post"
+					th:object="${doctor}">
+					<h1 style="color: #8ebf42; font-weight: bold;">Doctor
+						Registration Form</h1>
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Personal Details</h3>
+						</legend>
+						<div class="personal-details">
+							<div class="error-div">
+
+								<div>
+									<label>Registration Type*</label> <select
+										name="registrationType" class="form-control"
+										th:classappend="${#fields.hasErrors('registrationType') ? 'is-invalid': '' }"
+										th:value="${doctor.registrationType}">
+										<option selected value="">Please Select</option>
+										<option value="Clinic">Clinic</option>
+										<option value="Hospital">Hospital</option>
+									</select>
+								</div>
+								
+								<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('registrationType')}" th:text="${e}"></div>
+
+								<div>
+									<label>First Name*</label><input type="text"
+										class="form-control" name="fname"
+										th:value="${doctor.fname}"
+										th:classappend="${#fields.hasErrors('fname') ? 'is-invalid': '' }">
+
+								</div>
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('fname')}" th:text="${e}"></div>
+								<div>
+									<label>Last Name*</label><input type="text" name="lname"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('lname') ? 'is-invalid': '' }"
+										th:value="${doctor.lname}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('lname')}" th:text="${e}"></div>
 
 
 
-        <div class="col-md-4 offset-md-2">
-          <h3>Registration Type</h3>
-        </div>
+
+								<div>
+									<label>Qualification*</label> <select name="qualification"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('qualification') ? 'is-invalid': '' }"
+										th:value="${doctor.qualification}">
+										<option selected value="">Please Select</option>
+										<option value="MBBS">MBBS</option>
+										<option value="BDS">BDS</option>
+										<option value="BAMS">BAMS</option>
+										<option value="BUMS">BUMS</option>
+										<option value="BHMS">BHMS</option>
+										<option value="BSMS">BSMS</option>
+										<option value="BYNS">BYNS</option>
+										<option value="Other">Other</option>
+									</select>
+								</div>
+
+								<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('qualification')}" th:text="${e}"></div>
+
+								<div>
+									<label>Specialization*</label> <select name="specialiazation"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('specialiazation') ? 'is-invalid': '' }"
+										th:value="${doctor.specialiazation}">
+										<option selected value="">Please Select</option>
+										<option value="Neurologist">Neurologist</option>
+										<option value="Dentist">Dentist</option>
+										<option value="ENT">ENT</option>
+										<option value="Oncologist">Oncologist</option>
+										<option value="Cardiologist">Cardiologist</option>
+										<option value="Eye Specialist">Eye Specialist</option>
+										<option value="Orthopedic">Orthopedic</option>
+										<option value="Gynecologist">Gynecologist</option>
+										<option value="Dermatologist">Dermatologist</option>
+										<option value="Opthalmologists">Opthalmologists</option>
+										<option value="Other">Other</option>
+									</select>
+								</div>
+								<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('specialiazation')}" th:text="${e}"></div>
+							</div>
+							<div class="error-div">
+
+								<div>
+
+									<label>Gender*</label>
+									<div class="gender">
+										<label for="male" class="radio">Male</label><input
+											type="radio" value="male" id="male" name="gender" /> <label
+											for="female" class="radio">Female</label><input type="radio"
+											value="female" id="female" name="gender" />
+
+									</div>
+								</div>
+
+
+								<div class="birthdate">
+									<label>Birth Date*</label> <input type="Date" name="dob"
+										style="width: 15rem;" class="form-control"
+										th:classappend="${#fields.hasErrors('dob') ? 'is-invalid': '' }"
+										th:value="${doctor.dob}">
+								</div>
+
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('dob')}" th:text="${e}"></div>
+
+
+							</div>
+
+						</div>
+					</fieldset>
 
 
 
-        <div class="col-md-4 mb-4">
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Clinic/Hospital Details</h3>
+						</legend>
+						<div class="personal-details">
+						<div class="error-div">
+							<div>
+								<label>Clinic Name*</label><input type="text"
+									class="form-control" name="clinicName"
+									th:value="${doctor.clinicName}"
+									th:classappend="${#fields.hasErrors('clinicName') ? 'is-invalid': '' }">
+							</div>
+							
+							
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('clinicName')}" th:text="${e}"></div>
+							
 
-          <select class="form-select" name ="registrationType" th:classappend="${#fields.hasErrors('registrationType') ? 'is-invalid': '' }" th:value="${doctor.registrationType}" aria-label="Default select example">
-            <option selected value="">Please Select</option>
-            <option value="Clinic">Clinic</option>
-            <option value="Hospital">Hospital</option>
-            </select>
-            
-             <div class="invalid-feedback" th:each="e : ${#fields.errors('registrationType')}" th:text="${e}"></div>
-            
-        </div>
+							<div>
+								<label>Street*</label><input type="text" class="form-control"
+									name="streetAddress" th:value="${doctor.streetAddress}"
+									th:classappend="${#fields.hasErrors('streetAddress') ? 'is-invalid': '' }">
+							</div>
 
-        <hr>
-        <h3 class="offset-md-2">Doctor Details</h3>
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('streetAddress')}" th:text="${e}"></div>
 
-        <div class="col-md-4 offset-md-2">
-          <label for="exampleInputEmail1" class="form-label">First Name</label>
-          <input type="text" class="form-control" name="fname" th:classappend="${#fields.hasErrors('fname') ? 'is-invalid': '' }" th:value="${doctor.fname}"  id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('fname')}" th:text="${e}"></div>
-        </div>
+							<div>
+								<label>Landmark</label><input type="text" class="form-control"
+									name="landmark"
+									th:classappend="${#fields.hasErrors('landmark') ? 'is-invalid': '' }"
+									th:value="${doctor.landmark}">
+							</div>
 
-        <div class="col-md-4">
-          <label for="exampleInputPassword1" class="form-label">Last Name</label>
-          <input type="text" class="form-control" name="lname" th:classappend="${#fields.hasErrors('lname') ? 'is-invalid': '' }" th:value="${doctor.lname}" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('lname')}" th:text="${e}"></div>
-        </div>
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('landmark')}" th:text="${e}"></div>
 
-      </div>
+							<div>
+								<label>City*</label><input type="text" name="city"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('city') ? 'is-invalid': '' }"
+									th:value="${doctor.city}">
+							</div>
 
-      <hr>
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('city')}" th:text="${e}"></div>
 
-      <div class="row">
+							<div>
+								<label>State*</label> <select name="state" class="form-control"
+									th:classappend="${#fields.hasErrors('state') ? 'is-invalid': '' }"
+									th:value="${doctor.state}">
+									<option selected value="">Please Select</option>
+									<option value="Maharashtra">Maharashtra</option>
+									<option value="Gujrath">Gujrath</option>
+									<option value="Madhya Prasesh">Madhya Prasesh</option>
+									<option value="Goa">Goa</option>
+								</select>
+							</div>
 
-        <h3 class="offset-md-2"> Hospital/Clinic Address</h3>
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('state')}" th:text="${e}"></div>
 
-        <div class="col-md-8 offset-md-2">
-          <label for="exampleInputEmail1" class="form-label">Street Address</label>
-          <input type="text" class="form-control" name="streetAddress" th:value="${doctor.streetAddress}" th:classappend="${#fields.hasErrors('streetAddress') ? 'is-invalid': '' }"   id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('streetAddress')}" th:text="${e}"></div>
-        </div>
+							<div>
+								<label>Postal / Pin Code</label> <input type="text"
+									class="form-control" name="pin"
+									th:classappend="${#fields.hasErrors('pin') ? 'is-invalid': '' }"
+									th:value="${doctor.pin}">
+							</div>
 
-        <div class="col-md-4 offset-md-2">
-          <label for="exampleInputPassword1" class="form-label">Landmark</label>
-          <input type="text" class="form-control" th:value="${doctor.landmark}" th:classappend="${#fields.hasErrors('landmark') ? 'is-invalid': '' }" name="landmark" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('landmark')}" th:text="${e}"></div>
-        </div>
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('pin')}" th:text="${e}"></div>
+			
+						</div>
+						</div>
+					</fieldset>
 
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Account Details</h3>
+						</legend>
+						<div class="personal-details">
+						
+						<div class="error-div">
+							<div>
+								<label>Email*</label><input type="email" class="form-control"
+									name="email"
+									th:classappend="${#fields.hasErrors('email') ? 'is-invalid': '' }"
+									th:value="${doctor.email}">
+							</div>
+							
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+							
+							<div>
+								<label>Phone*</label><input type="text" class="form-control"
+									name="phone"
+									th:classappend="${#fields.hasErrors('phone') ? 'is-invalid': '' }"
+									th:value="${doctor.phone}">
+							</div>
+							
+							
+							<div class="invalid-feedback err"
+								th:each="e : ${#fields.errors('phone')}" th:text="${e}"></div>
+							
+							
+							<div>
+								<label>Password*</label><input type="password"
+									class="form-control" name="password" id="password"
+									th:classappend="${#fields.hasErrors('password') ? 'is-invalid': '' }"
+									th:value="${doctor.password}">
+							</div>
+							<div>
+								<label>Repeat password*</label><input type="password"
+									name="" id="verifyPassword" class="form-control">
+							</div>
+								<div class="invalid-feedback err" id="errorDiv"></div>
+							</div>
+						</div>
+					</fieldset>
 
-        <div class="col-md-4 ">
-          <label for="exampleInputPassword1" class="form-label">City</label>
-          <input type="text" class="form-control" name="city" th:value="${doctor.city}" th:classappend="${#fields.hasErrors('city') ? 'is-invalid': '' }" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('city')}" th:text="${e}"></div>
-        </div>
-
-
-
-        <div class="col-md-4 offset-md-2">
-          <label for="exampleInputPassword1" class="form-label">State</label>
-          <input type="text" class="form-control" name="state" th:value="${doctor.state}" th:classappend="${#fields.hasErrors('state') ? 'is-invalid': '' }" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('state')}" th:text="${e}"></div>
-        </div>
-
-
-        <div class="col-md-4 ">
-          <label for="exampleInputPassword1" class="form-label">Postal / Zip Code</label>
-          <input type="text" class="form-control" name="pin" th:value="${doctor.pin}" th:classappend="${#fields.hasErrors('pin') ? 'is-invalid': '' }" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('pin')}" th:text="${e}"></div>
-        </div>
-      </div>
-      <hr>
-
-      <div class="row">
-
-        <div class="col-md-4 offset-md-2">
-          <h3>Date of Birth</h3>
-          <input type="date" class="form-control" name ="dob" th:value="${doctor.dob}" th:classappend="${#fields.hasErrors('dob') ? 'is-invalid': '' }" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('dob')}" th:text="${e}"></div>
-        </div>
-
-
-        <div class="col-md-4 ">
-          <h3>Qualification</h3>
-          <select class="form-select" name="qualification" th:value="${doctor.qualification}" th:classappend="${#fields.hasErrors('qualification') ? 'is-invalid': '' }" aria-label="Default select example">
-            <option selected value="">Please Select</option>
-            <option value="Married">MBBS</option>
-            <option value="Single">HH</option>
-            <option value="Widowed">Widowed</option>
-            <option value="Divorced">Divorced</option>
-          </select>
-          
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('qualification')}" th:text="${e}"></div>
-          
-        </div>
-
-
-        <div class="col-md-4 offset-md-2 ">
-          <h3>Specialization</h3>
-          <select class="form-select" name="specialiazation" th:value="${doctor.specialiazation}" th:classappend="${#fields.hasErrors('specialiazation') ? 'is-invalid': '' }" aria-label="Default select example">
-            <option selected value="">Please Select</option>
-            <option value="Married">Neurologist</option>
-            <option value="Single">Dentist</option>
-            <option value="Widowed">ENT</option>
-            <option value="Divorced">Oncologist</option>
-            <option value="Married">Cardiologist</option>
-            <option value="Single">Eye Specialist</option>
-            <option value="Widowed">Orthopedic</option>
-            <option value="Divorced">Gynecologist</option>
-            <option value="Widowed">Dermatologist</option>
-            <option value="Divorced">Opthalmologists</option>
-            <option value="Divorced">Other</option>
-          </select>
-          
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('specialiazation')}" th:text="${e}"></div>
-          
-        </div>
-
-      </div>
-
-      <hr>
-      <div class="row">
-
-        <div class="col-md-4 offset-md-2">
-          <h3>Email</h3>
-          <input type="email" name="email" th:value="${doctor.email}" class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid': '' }" placeholder="abc@example.com" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
-        </div>
-
-        <div class="col-md-4">
-          <h3>Phone</h3>
-          <input type="text" name="phone" th:value="${doctor.phone}" class="form-control" th:classappend="${#fields.hasErrors('phone') ? 'is-invalid': '' }" id="exampleInputPassword1">
-          <div class="invalid-feedback" th:each="e : ${#fields.errors('phone')}" th:text="${e}"></div>
-        </div>
-
-        <div class="col-md-4 offset-md-2">
-          <h3>Password</h3>
-          <input type="password" name="password" th:classappend="${#fields.hasErrors('password') ? 'is-invalid': '' }" class="form-control" id="exampleInputPassword1">
-        	<div class="invalid-feedback" th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
-        </div>
-
-        <div class="col-md-4">
-          <h3>Verify Password</h3>
-          <input type="text" class="form-control" id="exampleInputPassword1">
-        </div>
-
-      </div>
-
-      <hr>
-
-      <div>
-        <div class="row">
-          <h3 class="offset-md-2">Please Upload Your Id</h3>
-          <div class="col-md-8 offset-md-2">
-            <div class="input-group">
-              <input type="file" class="form-control" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-                aria-label="Upload">
-                
-            </div>
-            <label for="exampleInputEmail1" class="form-label" style="color:red; font-size:10px; ">For Verification Purpose</label>
-            
-          </div>
-         
-
-        </div>
-
-      </div>
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Verification</h3>
+						</legend>
+						<div class="terms-mailing">
+							<div class="checkbox">
+								<input type="file" class="form-control" name="image"
+									aria-label="Upload">
+							</div>
+						</div>
+					</fieldset>
 
 
-
-
-      <hr>
-
-      <div class="mb-3 form-check offset-md-2 mt-4">
-        <input type="checkbox" name="agreement" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">I agree to terms & conditions</label>
-
-      </div>
-
-
-      <button type="submit" class="btn btn-primary offset-md-2">Submit</button>
-
-    </form>
-
-    <div class="col-md-3 border"></div>
-  </div>
-</section>
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Terms and Conditions</h3>
+						</legend>
+						<div class="terms-mailing">
+							<div class="checkbox">
+								<input type="checkbox" name="agreement"><span>I
+									accept the Privacy Policy for CareConnect.</span>
+							</div>
+						</div>
+					</fieldset>
+					<button class="reg-btn" type="submit" href="/">Submit</button>
+				</form>
+			</div>
+		</div>
+		
+		<script>
+		document.getElementById('doctorForm').addEventListener('submit', function(event) {
+		    // Retrieve the entered password and verified password
+		    var enteredPassword = document.getElementById('password').value;
+		    var verifiedPassword = document.getElementById('verifyPassword').value;
+		    var errorDiv = document.getElementById('errorDiv');
+		    
+		    // Compare the passwords
+		    if (enteredPassword !== verifiedPassword) {
+		      // Passwords don't match
+		      errorDiv.textContent = 'Password does not match';
+		      event.preventDefault(); // Prevent form submission
+		    }
+		  });
+		</script>
+		
+	</section>
 </body>
-
 </html>
+

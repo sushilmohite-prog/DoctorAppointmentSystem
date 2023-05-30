@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+th:replace="~{normal/patientbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+</head>
+
+<body>
+<section>
+<div class="container">
+<form action="">
+
+        <div class="row">
+
+            <div class="col">
+
+                <h3 class="title">billing address</h3>
+
+                <div class="inputBox">
+                    <span>full name :</span>
+                    <input type="text" th:value="${patient.fname}+' '+${patient.lname}" placeholder="john deo" readonly>
+                </div>
+                <div class="inputBox">
+                    <span>address :</span>
+                    <input type="text" th:value="${patient.streetAddress}+', '+${patient.landmark}" placeholder="room - street - locality" readonly>
+                </div>
+                <div class="inputBox">
+                    <span>city :</span>
+                    <input type="text" th:value="${patient.city}" placeholder="mumbai" readonly>
+                </div>
+
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>state :</span>
+                        <input type="text" th:value="${patient.state}" placeholder="india" readonly>
+                    </div>
+                    <div class="inputBox">
+                        <span>pin/zip code :</span>
+                        <input type="text" th:value="${patient.pin}" placeholder="123 456" readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col">
+
+                <h3 class="title">payment</h3>
+
+                <div class="inputBox">
+                    <span>cards accepted :</span>
+                    <img src="../images/card_img.png" alt="">
+                </div>
+                <div class="inputBox">
+                    <span>name on card :</span>
+                    <input type="text" placeholder="Your Name">
+                </div>
+                <div class="inputBox">
+                    <span>credit card number :</span>
+                    <input type="number" placeholder="1111-2222-3333-4444">
+                </div>
+                
+                <div class="flex">
+                	<div class="inputBox">
+                    	<span>exp month :</span>
+                    	<input type="text" placeholder="january">
+                	</div>
+                	<div class="inputBox">
+                        <span>exp year :</span>
+                        <input type="number" placeholder="2022">
+                    </div>
+				</div>
+                <div class="flex">
+                    
+                    <div class="inputBox">
+                        <span>CVV :</span>
+                        <input type="text" placeholder="1234">
+                    </div>
+                    
+                    <div class="inputBox">
+                        <span>Amount :</span>
+                        <input type="text" value="250 Rs" readonly>
+                    </div>
+                </div>
+
+            </div>
+    
+        </div>
+
+        <button class="submit-btn">Proceed For Payment</button>
+
+    </form>						
+   </div>		
+</section>
+
+	
+</body>
+
+</html>

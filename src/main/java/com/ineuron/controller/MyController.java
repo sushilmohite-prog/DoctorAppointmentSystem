@@ -1,6 +1,11 @@
 package com.ineuron.controller;
 
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,10 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ineuron.dao.AppointmentRepository;
 import com.ineuron.dao.DoctorRepository;
 import com.ineuron.dao.PatientRepository;
 import com.ineuron.helper.Message;
+
 import com.ineuron.models.Doctor;
 import com.ineuron.models.Patient;
 
@@ -28,31 +36,42 @@ public class MyController {
 	@Autowired
 	private PatientRepository patientRepository;
 	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private DoctorRepository doctorRepository;
 	
+	@Autowired
+	private AppointmentRepository appointmentRepository;
+	
+
+
+
+	@RequestMapping("/appointment")
+	public String appointment(Model model) {
+		List<Doctor> doctor = doctorRepository.findAll();
+	    model.addAttribute("doctors", doctor);
+	    model.addAttribute("title","Appointments");
+		return "appointment";
+	}
+
+
+	
 		@RequestMapping("index")
-		public String home() {
+		public String home(Model model) {
+			model.addAttribute("title","CareConnect - homepage");
 			return "home";
 		}
 		
 		@RequestMapping("/contact")
-		public String contact() {
+		public String contact(Model model) {
+			model.addAttribute("title","Contact Us");
 			return "contact";
 		}
 		
-		@RequestMapping("/appointment")
-			public String appointment() {
-				return "appointment";
-			}
-		
-		@RequestMapping("/dashboard")
-		public String dashboard() {
-			return "dashboard";
-		}
+
 		
 		@RequestMapping("/patient-registration")
 		public String patient(Model model){
@@ -85,21 +104,22 @@ public class MyController {
 				System.out.println("Agreement"+agreement);
 				System.out.println("User"+patient);
 				
-				patient.setRole("USER");
+				patient.setRole("ROLE_PATIENT");
 				patient.setPassword(bCryptPasswordEncoder.encode(patient.getPassword()));
+				patient.setEmail("patient_".concat(patient.getEmail()));
 				
 				this.patientRepository.save(patient);
 				
 				model.addAttribute("patient",new Patient());
 				
-				session.setAttribute("message", new Message("Successfully Registered", "alert-success"));
+				session.setAttribute("message", new Message("Successfully Registered Your Username is "+patient.getEmail(), "alert-success"));
 				return "patientregistration";
 				
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 				model.addAttribute("patient",patient);
-				session.setAttribute("message", new Message("Something Went Wrong "+e.getMessage(), "alert-danger"));
+				session.setAttribute("message", new Message("Something Went Wrong ", "alert-danger"));
 				return "patientregistration";
 			}
 			
@@ -141,6 +161,9 @@ public class MyController {
 				
 				System.out.println("Agreement"+agreement);
 				System.out.println("User"+doctor);
+				doctor.setRole("ROLE_DOCTOR");
+				doctor.setPassword(bCryptPasswordEncoder.encode(doctor.getPassword()));
+				doctor.setEmail("doctor_".concat(doctor.getEmail()));
 				
 				
 				Doctor result1 = this.doctorRepository.save(doctor);
@@ -149,27 +172,61 @@ public class MyController {
 				
 				model.addAttribute("doctor",new Doctor());
 				
-				session.setAttribute("message", new Message("Successfully Registered", "alert-success"));
+				session.setAttribute("message", new Message("Successfully Registered"+doctor.getEmail(), "alert-success"));
 				return "doctorregistration";
 				
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 				model.addAttribute("doctor",doctor);
-				session.setAttribute("message", new Message("Something Went Wrong "+e.getMessage(), "alert-danger"));
+				session.setAttribute("message", new Message("Something Went Wrong ", "alert-danger"));
 				return "doctorregistration";
 			}
 			
 		}
 		
 		
-		//handler for login
-		@GetMapping("/login")
-		public  String customLogin(Model model)
-		{
-			model.addAttribute("title","Login Page");
-			return "login";
+
+		@GetMapping("/get-available-appointments")
+		@ResponseBody
+		public Map<Long, String> getAvailableAppointments(@RequestParam("docId") int docId,
+		        @RequestParam("date") LocalDate date) {
+		    // Perform the necessary logic to get the number of available appointments
+			
+			
+			long availableAppointments = appointmentRepository.countByDocIdAndDate(docId,date);
+		    long remainingAppointments = Math.max(30 - availableAppointments, 0);
+			
+		    System.out.println(remainingAppointments);	
+		    // Create a map to hold the response
+		    Map<Long, String> response = new HashMap<>();
+		    response.put(remainingAppointments, "availableAppointments");
+
+		    return response;
 		}
 		
 		
+		@GetMapping("/search")
+		public String searchDoctor(@RequestParam("query") String query, Model model) {
+			List<Doctor> doctors = doctorRepository.search(query);
+			System.out.println(doctors);
+			model.addAttribute("doctors",doctors);
+			return "appointment";
+		}
+		
+		
+	@RequestMapping("/doctor-list")
+	public String docList(Model model) {
+		List<Doctor> doctors = doctorRepository.findAll();
+		model.addAttribute("doctor",doctors);
+		model.addAttribute("title","Doctors list");
+		return "doctors";
+	}
+		
+	@RequestMapping("/signin")
+	public String signin(Model model){
+		model.addAttribute("title","Sign In Form");
+		return "signin";
+	}
+	
 }

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+	th:replace="~{normal/doctorbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+
+</head>
+
+
+<body>
+	<section>
+		<div class="app-page-title">
+			<div class="page-title-wrapper">
+				<div class="page-title-heading">
+					<div class="page-title-icon">
+						<i class="fa-regular fa-hospital" style="color: #000000;"></i>
+					</div>
+					<div>
+						Doctor's Dashboard
+						<div class="page-title-subheading">Manage you appointment
+							from here !</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main-card mb-3 card">
+					<div class="card-header">
+						All Patients
+						<div class="btn-actions-pane-right">
+							<div role="group" class="btn-group-sm btn-group">
+								<div role="group" class="btn-group-sm btn-group">
+									<button class="btn-wide btn btn-success text-right">Export</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table
+							class="align-middle mb-0 table table-borderless table-striped table-hover">
+							<thead>
+								<tr>
+									<th class="text-center">Appointment Id</th>
+									<th class="text-center">Date</th>
+									<th class="text-center">Name</th>
+									<th class="text-center">Contact</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="app: ${appointment}">
+									<td class="text-center text-muted" th:text="${app.appId}"></td>
+
+									<td class="text-center" th:text="${app.date}"></td>
+
+									<td>
+										<div class="widget-content p-0">
+											<div class="widget-content-wrapper">
+
+												<div class="widget-content-left flex2">
+													<div class="widget-heading text-center"
+														th:text="${app.patientName}"></div>
+
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td class="text-center" th:text="${app.patientPhone}"></td>
+									
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<div class="d-block text-right card-footer">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+								<li th:if="${currentPage != 0}" class="page-item"><a
+									class="page-link"
+									th:href="@{/doctor/patient-list(page=${currentPage-1})}"
+									href="#" tabindex="-1">Previous</a></li>
+
+								<li th:classappend="${currentPage == i-1 ? 'active' : ''}"
+									th:each="i : ${#numbers.sequence(1, totalPages)}"
+									class="page-item"><a
+									th:href="@{/doctor/patient-list(page=${i-1})}"
+									class="page-link" href=""><span th:text="${i}"></span></a></li>
+
+								<li th:if="${currentPage+1 != totalPages}" class="page-item">
+									<a class="page-link"
+									th:href="@{/doctor/patient-list(page=${currentPage+1})}"
+									href="#">Next</a>
+								</li>
+							</ul>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

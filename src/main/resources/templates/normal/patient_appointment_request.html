@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+	th:replace="~{normal/patientbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+
+</head>
+
+<body>
+
+	<section>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="container-md ">
+
+					<div class="row">
+						<div class="col-md-2 .offset-md-5"></div>
+						<div class="col-md-8 wrapper-body">
+
+							<div class="wrapper1">
+								<div class="search_box1">
+									<div class="dropdown1">
+										<div class="default_option1">All</div>
+										<ul>
+											<li>All</li>
+											<li>Recent</li>
+											<li>Popular</li>
+										</ul>
+									</div>
+
+									<form th:action="@{/patient/search}" method="get">
+										<div class="search_field1">
+											<input type="text" class="input" id="queryInput" name="query"
+												placeholder="Search">
+											<button type="submit" class="icon-button">
+												<i class="fas fa-search"></i>
+											</button>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-2 .offset-md-5"></div>
+						<div class="courses-container col-md-8">
+
+
+
+							<div class="course" th:each="doc: ${doctors}">
+								<div class="course-preview">
+									<h6 th:text="${doc.registrationType}"></h6>
+									<h4 th:text="${doc.fname}+' '+${doc.lname}"></h4>
+									<h6 th:text="${doc.specialiazation}"></h6>
+									<a href="#">Find Location <i
+										class="fa-solid fa-location-dot" style="color: #ffffff;"></i></a>
+								</div>
+								<div class="course-info">
+
+									<h6>Clinic Name</h6>
+									<h5 th:text="${doc.clinicName}"></h5>
+									<h6>Address</h6>
+									<h6
+										style="font-weight: bold; opacity: 1; letter-spacing: 1px; text-transform: lowercase;"
+										th:text="${doc.streetAddress}+', '+${doc.landmark}+', '+${doc.city}+', '+${doc.state}+', '+${doc.pin}"></h6>
+									<a
+										th:href="@{/patient/appointment-request(docId=${doc.docId})}">
+										<button class="btn2" data-toggle="modal"
+											data-target="#exampleModal">Book Appointment</button>
+									</a>
+								</div>
+							</div>
+
+
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+</section>
+</body>
+
+</html>

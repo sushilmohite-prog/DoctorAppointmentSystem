@@ -1,105 +1,123 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="base::layout(~{::section})">
+	th:replace="~{base::layout(~{::section})}">
 <head>
-	<meta charset="UTF-8" />
-	<title>Appointments</title>
+<meta charset="UTF-8" />
+<title>Appointments</title>
 </head>
+
 <body>
 
-<section class="py1">
-<div class="container-md ">
-<div class="row">
-    
-  
-  <div class="col-md-2 .offset-md-5"></div>
-  <div class="card" style="width: 70rem; ">
-  <div class="card-body">
-    <h5 class="card-title cardtitle" style="font-size:25px"><i class="fa-solid fa-calendar-check" style="color: #1e3050; padding-right: 2px;"></i> Book an Appointment</h5>
-    <h6 class="card-subtitle mt-2 mb-2 text-body-secondary" style="font-size:15px">The available data displayed in the pincode or district search is provided by the private and government hospitals.</h6>
-   
-   
-   <div class="dropbody">
-    <div class="dropdown">
-      <div class="select">
-        <span class="selected">State</span>
-          <div class="caret"></div>
-      </div>
+	<section class="py1">
+		<div class="container-md ">
+			<div class="row mb-5">
+				<div class="col-md-12 text-center">
+					<span style="color: red; font-weight: bold;"> <marquee>
+							Please Login To book Appointment</marquee></span>
+				</div>
+			</div>
 
-      <ul class="menu">
-        <li class="active">Frame</li>
-        <li>Sketch</li>
-      </ul>
+			<div class="row">
 
-    </div>
+				<div class="col-md-4 "></div>
+				<div class="col-md-8 wrapper-body">
 
-    <div class="dropdown" style="margin-left:3px;">
-      <div class="select">
-        <span class="selected">District</span>
-          <div class="caret"></div>
-      </div>
+					<div class="wrapper1">
+						<div class="search_box1">
 
-      <ul class="menu">
-        <li class="active">Frame</li>
-        <li>Sketch</li>
-      </ul>
+							<form th:action="@{/search}" method="get">
+								<div class="search_field1">
+									<input type="text" class="input" id="queryInput" name="query"
+										placeholder="Search">
+									<button type="submit" class="icon-button">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
+							</form>
 
-    </div>
-
-    <button type="button" class="btn btn-lg btn-outline-primary mx-3" >Search</button>
-
-  </div>
+						</div>
 
 
-  </div>
-</div>
 
-</div>
+					</div>
+				</div>
+			</div>
 
-</div>
+		</div>
 
-
-<script>
-
-//dropdown 
-const dropdowns= document.querySelectorAll('.dropdown');
-
-dropdowns.forEach(dropdown=>{
-  const select = dropdown.querySelector('.select');
-  const caret = dropdown.querySelector('.caret');
-  const menu = dropdown.querySelector('.menu');
-  const options = dropdown.querySelectorAll('.menu li');
-  const selected = dropdown.querySelector('.selected');
-  
-  
-  select.addEventListener('click',()=>{
-      select.classList.toggle('select-clicked');
-      caret.classList.toggle('caret-rotate');
-      menu.classList.toggle('menu-open');
-  });
-
-  options.forEach(option=>{
-      option.addEventListener('click',()=>{
-          selected.innerText =option.innerText;
-          select.classList.remove('select-clicked');
-          caret.classList.remove('caret-rotate');
-          menu.classList.remove('menu-open');
+		<div class="row">
+			<div class="col-md-4">
+				<ul class="list-group mx-5 list-group-flush shadow-lg mt-4 bg-white rounded">
+					<li class="list-group-item list-group-item-light font-weight-bold"><a th:href="@{/signin}">Patient Login</a></li>
+					
+					<li class="list-group-item list-group-item-light font-weight-bold"><a th:href="@{/patient-registration}">Register As Patient</a></li>
+						
+					<li class="list-group-item list-group-item-light font-weight-bold"><a th:href="@{/doctor-registration}">Register As Doctor</a></li>
+			
+				</ul>
+				
+				
 
 
-          options.forEach(option=>{
-              option.classList.remove('active');
-          });
-          option.classList.add('active');
-      });
-  });
-});
+			</div>
+			<div class="courses-container col-md-8">
 
-//drop down end
 
-</script>
 
-</section>
-	
-	
+				<div class="course" th:each="doc: ${doctors}">
+					<div class="course-preview">
+						<h6 th:text="${doc.registrationType}"></h6>
+						<h2 th:text="${doc.fname}+' '+${doc.lname}"></h2>
+						<h6 th:text="${doc.specialiazation}"></h6>
+						<a href="#">Find Location <i class="fa-solid fa-location-dot"
+							style="color: #ffffff;"></i></a>
+					</div>
+					<div class="course-info">
+
+						<h6>Clinic Name</h6>
+						<h2 th:text="${doc.clinicName}"></h2>
+						<h6>Address</h6>
+						<h4
+							th:text="${doc.streetAddress}+', '+${doc.landmark}+', '+${doc.city}+', '+${doc.state}+', '+${doc.pin}"></h4>
+
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+
+		</div>
+
+
+
+		<script>
+			var today = new Date();
+			var minDate = today.toISOString().split('T')[0];
+			var maxDate = new Date(today.getFullYear(), today.getMonth(), today
+					.getDate() + 7).toISOString().split('T')[0];
+
+			document.getElementById('dateInput').min = minDate;
+			document.getElementById('dateInput').max = maxDate;
+
+			$(".default_option1").click(function() {
+				$(".dropdown1 ul").addClass("active");
+			});
+
+			$(".dropdown1 ul li").click(function() {
+				var text = $(this).text();
+				$(".default_option1").text(text);
+				$(".dropdown1 ul").removeClass("active");
+			});
+
+			//drop down end
+		</script>
+		<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+
+	</section>
+
+
 </body>
 </html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<title>Account registration form</title>
+<link
+	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'
+	rel='stylesheet' type='text/css'>
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+	rel="stylesheet">
+
+</head>
+<body>
+
+	<section>
+
+		<style>
+form, input, select, p {
+	padding: 0;
+	margin: 0;
+	outline: none;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 14px;
+	color: #666;
+}
+
+h1 {
+	margin: 0;
+	font-weight: 400;
+}
+
+.form-h3 {
+	margin: 12px 0;
+	color: #8ebf42;
+	font-weight:bold;
+}
+
+.form-main-block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+}
+
+form {
+	width: 100%;
+	padding: 20px;
+}
+
+.form-fieldset {
+	border: none;
+	border-top: 1px solid #8ebf42;
+}
+
+.account-details, .personal-details {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.account-details>div, .personal-details>div>div {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.account-details>div, .personal-details>div, input, label {
+	width: 100%;
+}
+
+label {
+	padding: 0 5px;
+	text-align: right;
+	vertical-align: middle;
+	font-weight:bold;
+}
+
+input {
+	padding: 5px;
+	vertical-align: middle;
+}
+
+ul {
+	list-style-type: none;
+}
+
+li div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.checkbox {
+	margin-bottom: 5px;
+}
+
+select, .children, .gender, .bdate-block {
+	width: calc(100% + 26px);
+	padding: 5px 0;
+}
+
+select {
+	background: transparent;
+}
+
+.gender input {
+	width: auto;
+}
+
+.gender label {
+	padding: 0 5px 0 0;
+}
+
+.bdate-block {
+	display: flex;
+	justify-content: space-between;
+}
+
+.birthdate select.day {
+	width: 35px;
+}
+
+.birthdate select.mounth {
+	width: calc(100% - 94px);
+}
+
+.birthdate input {
+	width: 38px;
+	vertical-align: unset;
+}
+
+.checkbox input, .children input {
+	width: auto;
+	margin: -2px 10px 0 0;
+}
+
+.checkbox a {
+	color: #8ebf42;
+}
+
+.checkbox a:hover {
+	color: #82b534;
+}
+
+.reg-btn {
+	width: 100%;
+	padding: 10px 0;
+	margin: 10px auto;
+	border-radius: 5px;
+	border: none;
+	background: #8ebf42;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+}
+
+.error-div .err {
+	margin-left: 16rem;
+}
+
+.reg-btn:hover {
+	background: #82b534;
+}
+
+@media ( min-width : 568px) {
+	.account-details>div, .personal-details>div {
+		width: 50%;
+	}
+	label {
+		width: 40%;
+	}
+	input {
+		width: 60%;
+	}
+	select, .children, .gender, .bdate-block {
+		width: calc(60% + 16px);
+	}
+}
+
+.new-select{
+float: left;
+margin-left:1rem;
+}
+</style>
+
+		<div class="container py1">
+
+<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+ 				 <p th:text="${session.message.content}"></p>			 
+			</div>
+			<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+			<div class="form-main-block">
+				<form th:action="@{/patient_register}" id="patientForm"  method="post"
+					th:object="${patient}">
+					<h1 style="color: #8ebf42; font-weight: bold;">Patient
+						Registration Form</h1>
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Personal Details</h3>
+						</legend>
+						<div class="personal-details">
+							<div class="error-div">
+								<div>
+									<label>First Name*</label><input type="text"
+										class="form-control" name="fname" th:value="${patient.fname}"
+										th:classappend="${#fields.hasErrors('fname') ? 'is-invalid': '' }">
+
+								</div>
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('fname')}" th:text="${e}"></div>
+								<div>
+									<label>Last Name*</label><input type="text" name="lname"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('lname') ? 'is-invalid': '' }"
+										th:value="${patient.lname}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('lname')}" th:text="${e}"></div>
+
+								<div>
+									<label>Street*</label><input type="text" class="form-control"
+										name="streetAddress" th:value="${patient.streetAddress}"
+										th:classappend="${#fields.hasErrors('streetAddress') ? 'is-invalid': '' }">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('streetAddress')}" th:text="${e}"></div>
+
+								<div>
+									<label>Landmark</label><input type="text" class="form-control"
+										name="landmark"
+										th:classappend="${#fields.hasErrors('landmark') ? 'is-invalid': '' }"
+										th:value="${patient.landmark}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('landmark')}" th:text="${e}"></div>
+
+								<div>
+									<label>City*</label><input type="text" name="city"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('city') ? 'is-invalid': '' }"
+										th:value="${patient.city}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('city')}" th:text="${e}"></div>
+
+								<div>
+									<label>State*</label> <select name="state" class="form-control"
+										th:classappend="${#fields.hasErrors('state') ? 'is-invalid': '' }"
+										th:value="${patient.state}">
+										<option selected value="">Please Select</option>
+										<option value="Maharashtra">Maharashtra</option>
+										<option value="Gujrath">Gujrath</option>
+										<option value="Madhya Prasesh">Madhya Prasesh</option>
+										<option value="Goa">Goa</option>
+									</select>
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('state')}" th:text="${e}"></div>
+
+								<div>
+									<label>Postal / Pin Code</label><input type="text"
+										class="form-control" name="pin"
+										th:classappend="${#fields.hasErrors('pin') ? 'is-invalid': '' }"
+										th:value="${patient.pin}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('pin')}" th:text="${e}"></div>
+
+							</div>
+
+
+							<div class="error-div">
+
+								<div>
+									<label>Marital Status*</label> <select name="maritalStatus"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('maritalStatus') ? 'is-invalid': '' }"
+										th:value="${patient.maritalStatus}">
+										<option selected value="">Please Select</option>
+										<option value="Married">Married</option>
+										<option value="Single">Single</option>
+										<option value="Widowed">Widowed</option>
+										<option value="Divorced">Divorced</option>
+									</select>
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('maritalStatus')}" th:text="${e}"></div>
+
+								<div>
+
+									<label>Gender*</label>
+									<div class="gender">
+										<label for="male" class="radio">Male</label><input
+											type="radio" value="Male" id="male" name="gender" /> <label
+											for="female" class="radio">Female</label><input type="radio"
+											value="Female" id="female" name="gender" />
+
+									</div>
+								</div>
+
+
+								<div class="birthdate">
+									<label>Birth Date*</label> <input type="Date" name="dob"
+										style="width: 15rem;" class="form-control"
+										th:classappend="${#fields.hasErrors('dob') ? 'is-invalid': '' }"
+										th:value="${patient.dob}">
+								</div>
+
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('dob')}" th:text="${e}"></div>
+
+							</div>
+						</div>
+					</fieldset>
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Account Details</h3>
+						</legend>
+						<div class="personal-details">
+							<div class="error-div">
+								<div>
+									<label>Email*</label><input type="email" class="form-control"
+										name="email"
+										th:classappend="${#fields.hasErrors('email') ? 'is-invalid': '' }"
+										th:value="${patient.email}">
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+		
+								<div>
+									<label>Phone*</label><input type="text" class="form-control"
+										name="phone"
+										th:classappend="${#fields.hasErrors('phone') ? 'is-invalid': '' }"
+										th:value="${patient.phone}">
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('phone')}" th:text="${e}"></div>
+								
+								<div>
+									<label>Password*</label><input type="password"
+										class="form-control" name="password" id="password"
+										th:classappend="${#fields.hasErrors('password') ? 'is-invalid': '' }"
+										th:value="${patient.password}">
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
+								
+								<div>
+									<label>Repeat password*</label><input type="password"
+										name="" id="verifyPassword" class="form-control">
+								</div>
+								
+								<div class="invalid-feedback err" id="errorDiv"></div>
+								
+							</div>
+						</div>
+					</fieldset>
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Emergency Contact Details</h3>
+						</legend>
+						<div class="personal-details">
+							<div class="error-div">
+								<div>
+									<label>Full Name*</label><input type="text"
+										class="form-control" name="emergencyName"
+										th:classappend="${#fields.hasErrors('emergencyName') ? 'is-invalid': '' }"
+										th:value="${patient.emergencyName}">
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('emergencyName')}" th:text="${e}"></div>
+									
+								<div>
+									<label>Phone*</label><input type="text" class="form-control"
+										name="emergencyContact"
+										th:classappend="${#fields.hasErrors('emergencyContact') ? 'is-invalid': '' }"
+										th:value="${patient.emergencyContact}">
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('emergencyContact')}" th:text="${e}"></div>
+
+								<div>
+									<label>Relation*</label> <select class="form-control"
+										name="emergencyRelation"
+										th:classappend="${#fields.hasErrors('emergencyRelation') ? 'is-invalid': '' }"
+										th:value="${patient.emergencyRelation}">
+										<option selected value="">Please Select</option>
+										<option value="Father">Father</option>
+										<option value="Son">Son</option>
+										<option value="Brother">Brother</option>
+										<option value="Mother">Mother</option>
+										<option value="Sister">Sister</option>
+										<option value="Daughter">Daughter</option>
+										<option value="Husband">Husband</option>
+									</select>
+								</div>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('emergencyRelation')}" th:text="${e}"></div>
+
+							</div>
+						</div>
+					</fieldset>
+
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Medical History</h3>
+						</legend>
+
+						<div class="account-details">
+
+							<div>
+								<label>Do you use tobacco?*</label> <select name="tobaccoUse"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('tobaccoUse') ? 'is-invalid': '' }"
+									th:value="${patient.tobaccoUse}">
+									<option selected value="">Please Select</option>
+									<option value="No">No</option>
+									<option value="Daily">Daily</option>
+									<option value="Weekly">Weekly</option>
+								</select>
+								
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('tobaccoUse')}" th:text="${e}"></div>
+								
+							</div>
+							
+
+							<div>
+								<label>Do you use Alcohol?*</label> <select name="alcoholUse"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('alcoholUse') ? 'is-invalid': '' }"
+									th:value="${patient.alcoholUse}">
+									<option selected value="">Please Select</option>
+									<option value="No">No</option>
+									<option value="Daily">Daily</option>
+									<option value="Weekly">Weekly</option>
+								</select>
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('alcoholUse')}" th:text="${e}"></div>
+							</div>
+							<div>
+								<label>Medical History*</label>
+								<input type="text" placeholder="select the options below"
+										class="form-control" name="medicalHistory"
+										id="combinedFieldMH"
+										th:classappend="${#fields.hasErrors('medicalHistory') ? 'is-invalid': '' }"
+										th:value="${patient.medicalHistory}">
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('medicalHistory')}" th:text="${e}"></div>
+							</div>
+							
+							<div>
+							<label>Family Medical History*</label>
+								<input type="text" placeholder="select the options below"
+										class="form-control" name="familyHistory"
+										id="combinedFieldFMH"
+										th:classappend="${#fields.hasErrors('familyHistory') ? 'is-invalid': '' }"
+										th:value="${patient.familyHistory}">
+										
+								<div class="invalid-feedback err"
+									th:each="e : ${#fields.errors('familyHistory')}" th:text="${e}"></div>
+							</div>
+							
+							<div style="padding:15px;">
+								
+								<ul>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="none"><label for="">None</label>
+										</div>
+									</li >
+									
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Arthritis"><label for="">Arthritis</label>
+										</div>
+									</li >
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Asthma"><label for="">Asthma</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option"  value="Cancer"><label for="">Cancer</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option"  value="Blood Disorder"><label for="">Blood Disorder</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option"  value="Dementia"><label for="">Dementia</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option"  value="Depression"><label for="">Depression</label>
+										</div>
+									</li>
+										<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Diabetes"><label for="">Diabetes</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="High BP"><label for="">High BP</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Mental Illness"><label for="">Mental Illness</label>
+										</div>
+									</li>
+								
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Heart Disease"><label for="">Heart disease</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="High cholesterol"><label for="">High cholesterol</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option" value="Liver disease"><label for="">Liver disease</label>
+										</div>
+									</li>
+									
+								</ul>
+							</div>
+
+
+
+
+							<div style="padding:15px;">
+								
+								<ul>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="none"><label for="">None</label>
+										</div>
+									</li >
+									
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Arthritis"><label for="">Arthritis</label>
+										</div>
+									</li >
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Asthma"><label for="">Asthma</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1"  value="Cancer"><label for="">Cancer</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1"  value="Blood Disorder"><label for="">Blood Disorder</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1"  value="Dementia"><label for="">Dementia</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1"  value="Depression"><label for="">Depression</label>
+										</div>
+									</li>
+										<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Diabetes"><label for="">Diabetes</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="High BP"><label for="">High BP</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Mental Illness"><label for="">Mental Illness</label>
+										</div>
+									</li>
+								
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Heart Disease"><label for="">Heart disease</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="High cholesterol"><label for="">High cholesterol</label>
+										</div>
+									</li>
+									<li class="new-select">
+										<div class="children">
+											<input type="checkbox" name="option1" value="Liver disease"><label for="">Liver disease</label>
+										</div>
+									</li>
+									
+								</ul>
+							</div>
+
+
+						</div>
+					</fieldset>
+
+
+
+					<fieldset class="form-fieldset">
+						<legend>
+							<h3 class="form-h3">Terms and Conditions</h3>
+						</legend>
+						<div class="terms-mailing">
+							<div class="checkbox">
+								<input type="checkbox" name="agreement"><span>I
+									accept the Privacy Policy for CareConnect.</span>
+							</div>
+						</div>
+					</fieldset>
+					<button class="reg-btn" type="submit" href="/">Submit</button>
+				</form>
+			</div>
+		</div>
+		
+		<script>	
+		
+		document.getElementById('patientForm').addEventListener('submit', function(event) {
+		    // Retrieve the entered password and verified password
+		    var enteredPassword = document.getElementById('password').value;
+		    var verifiedPassword = document.getElementById('verifyPassword').value;
+		    var errorDiv = document.getElementById('errorDiv');
+		    
+		    // Compare the passwords
+		    if (enteredPassword !== verifiedPassword) {
+		      // Passwords don't match
+		      errorDiv.textContent = 'Password does not match';
+		      event.preventDefault(); // Prevent form submission
+		    }
+		  });
+		
+		
+		var checkboxes = document.getElementsByName("option");
+		var combinedField = document.getElementById("combinedFieldMH");
+		var checkboxes1 = document.getElementsByName("option1");
+		var combinedField1 = document.getElementById("combinedFieldFMH");
+
+		function updateCombinedValues() {
+		  var selectedValues = [];
+		  
+		  for (var i = 0; i < checkboxes.length; i++) {
+		    if (checkboxes[i].checked) {
+		      selectedValues.push(checkboxes[i].value);
+		    }
+		  }
+		  
+		  var combinedValues = selectedValues.join(", ");
+		  combinedField.value = combinedValues;
+		}
+
+		for (var i = 0; i < checkboxes.length; i++) {
+		  checkboxes[i].addEventListener("change", updateCombinedValues);
+		}
+		
+		
+		//next
+		function updateCombinedValues1() {
+			  var selectedValues1 = [];
+			  
+			  for (var i = 0; i < checkboxes1.length; i++) {
+			    if (checkboxes1[i].checked) {
+			      selectedValues1.push(checkboxes1[i].value);
+			    }
+			  }
+			  
+			  var combinedValues1 = selectedValues1.join(", ");
+			  combinedField1.value = combinedValues1;
+			}
+
+			for (var i = 0; i < checkboxes1.length; i++) {
+			  checkboxes1[i].addEventListener("change", updateCombinedValues1);
+			}
+
+		</script>
+		
+	</section>
+</body>
+</html>
+

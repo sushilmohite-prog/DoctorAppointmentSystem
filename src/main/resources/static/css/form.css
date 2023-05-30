@@ -140,8 +140,8 @@
 
 .formbutton {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border: 1px solid rgb(51, 209, 122);
+	background-color: rgb(51, 209, 122);
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -255,9 +255,9 @@ button .ghost {
 }
 
 .overlay1 {
-	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background: rgb(205, 171, 143);
+	background: -webkit-linear-gradient(to right, rgb(70, 158, 123), #57e389);
+	background: linear-gradient(to right, rgb(107, 177, 116), #57e389);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;

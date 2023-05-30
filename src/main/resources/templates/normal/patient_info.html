@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+	th:replace="~{normal/doctorbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Patient Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+
+</head>
+
+
+<body>
+
+	<section>
+		<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+			<div class="card-body">
+			<div class="row  justify-content-end"><a th:href="@{/doctor/doctor-dashboard}"><button class="btn btn-danger btn-sm text-right"> Close </button></a></div>
+			
+				<div class="row" >
+					<span style="font-weight: bold; font-size: 30px; color: green;">Patient Information</span>
+					
+					</div>
+				<div class='row'> 
+				
+					<div class="col-md-12">
+						<table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped ">
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>Patient Name</td>
+									<td th:text="${patient.fname}+' '+${patient.lname}"></td>
+									
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>Patient Address</td>
+									<td th:text="${patient.streetAddress}+', '+${patient.landmark}+', '+${patient.city}+', '+${patient.state}+', '+${patient.pin}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">3</th>
+									<td>Date of birth</td>
+									<td th:text="${patient.dob}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">4</th>
+									<td>Patient Contact</td>
+									<td th:text="${patient.phone}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">5</th>
+									<td>Patient Gender</td>
+									<td th:text="${patient.gender}"></td>
+								</tr>
+								
+									<tr>
+									<th scope="row">6</th>
+									<td>Alcohol Consumption</td>
+									<td th:text="${patient.alcoholUse}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">7</th>
+									<td>Tobacco Consumption</td>
+									<td th:text="${patient.tobaccoUse}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">8</th>
+									<td>Medical History</td>
+									<td th:text="${patient.medicalHistory}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">9</th>
+									<td>Family Medical History</td>
+									<td th:text="${patient.familyHistory}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">10</th>
+									<td>Emergency Contact Name</td>
+									<td th:text="${patient.emergencyName}"></td>
+								</tr>
+								
+								<tr>
+									<th scope="row">11</th>
+									<td>Emergency Contact Phone</td>
+									<td th:text="${patient.emergencyContact}"></td>
+								</tr>
+								<tr>
+									<th scope="row">12</th>
+									<td>Emergency Contact Relation</td>
+									<td th:text="${patient.emergencyRelation}"></td>
+								</tr>
+								
+							
+								
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

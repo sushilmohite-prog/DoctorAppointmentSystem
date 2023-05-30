@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.themeleaf.org"
+th:replace="~{normal/patientbase::layout(~{::section})}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Doctor Dashboard</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+<meta name="description"
+	content="This is an example dashboard created using build-in elements and components.">
+<meta name="msapplication-tap-highlight" content="no">
+</head>
+
+<body>
+					<section>
+						<div class="row">
+						
+							<div class="container-fluid px-1 mx-auto">
+								<div class="row d-flex justify-content-center">
+									<div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+										<div class="card">
+
+
+											<h3 class="text-center mb-5"
+												style="color: green; font-weight: bold;">Appointment
+												Request Form</h3>
+											<h4 class="text-left" style="color: blue; font-weight: bold;">Patient
+												Details</h4>
+											<hr />
+											<form class="form-card" th:action="@{/patient/appointment_register}"
+												method="post" th:object="${appointment}">
+
+
+
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-sm-12 flex-column d-flex">
+														<label class="form-control-label "
+															style="font-weight: bold;">Full name<span
+															class="text-danger"> *</span>
+														</label> <input type="text" id="fname" name="patientName"
+															placeholder="Enter your first name"
+															th:value="${patient.fname}+' '+${patient.lname}" readonly>
+													</div>
+
+												</div>
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-sm-6 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Phone number<span
+															class="text-danger"> *</span>
+														</label> <input type="text" id="mob" name="patientPhone"
+															placeholder="" th:value="${patient.phone}" readonly>
+													</div>
+												</div>
+
+
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-sm-6 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Patient Username<span
+															class="text-danger"> *</span>
+														</label> <input type="text" id="mob" name="patientEmail"
+															placeholder="" th:value="${patient.email}" readonly>
+													</div>
+												</div>
+
+
+												<h4 class="text-left"
+													style="color: blue; font-weight: bold;">Doctor Details</h4>
+												<hr />
+
+												
+													 <input type="hidden" id="docId" name="docId" placeholder=""
+															th:value="${doctor.docId}" readonly>
+														
+													<input type="hidden" id="patientId" name="patientId" placeholder=""
+															th:value="${patient.patientId}" readonly>	
+
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-sm-12 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Full Name<span
+															class="text-danger"> *</span>
+														</label> <input type="text" id="job" name="docName" placeholder=""
+															th:value="${doctor.fname}+' '+${doctor.lname}" readonly>
+													</div>
+												</div>
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-12 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Hospital/Clinic Name<span
+															class="text-danger"> *</span>
+														</label> <input type="text" id="ans" name="hospitalName"
+															placeholder="" th:value="${doctor.clinicName}" readonly>
+													</div>
+												</div>
+
+												<h4 class="text-left"
+													style="color: blue; font-weight: bold;">Appointment
+													Scheduling</h4>
+												<hr />
+
+												<div class="row justify-content-between text-left">
+													<div class="form-group col-sm-12 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Select Date<span
+															class="text-danger"> *</span>
+														</label> <input type="date" id="dateInput" name="date"
+															min="{{today}}" max="{{nextTwoWeeks}}" placeholder=""
+															onchange="handleDateChange()"
+															th:value="${appointment.date}"
+															th:classappend="${#fields.hasErrors('date') ? 'is-invalid': '' }">
+													</div>
+
+													<div class="form-group col-sm-12 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold;">Available Appointments
+															<small>(please select date to display if the date
+																is available or not)</small>
+														</label> <label class="form-control-label"
+															style="font-weight: bold; color: green;"><span
+															id="availableAppointments"> </span> </label>
+													</div>
+
+
+													<div class="form-group col-sm-12 flex-column d-flex">
+														<label class="form-control-label"
+															style="font-weight: bold; color: red;"><small
+															id="errorApp" style="font-weight: bold;"> </small> </label>
+													</div>
+
+												</div>
+
+												<div class="invalid-feedback err"
+													th:each="e : ${#fields.errors('date')}" th:text="${e}"></div>
+
+
+												<div class="row justify-content-end">
+													<div class="form-group mt-4 col-sm-6">
+														<button type="submit" id="submitButton"
+															class="btn-block btn-success">Book Appointment</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+</section>
+
+	
+</body>
+
+</html>
