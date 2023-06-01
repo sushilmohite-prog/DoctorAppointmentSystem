@@ -1127,7 +1127,7 @@ button[class ^= navbar1]:hover{
 }
 
 /* Media query for mobile */
-@media (max-width: 600px) {
+@media (max-width: 450px) {
   .course {
     flex-direction: column;
     width: 100%;
