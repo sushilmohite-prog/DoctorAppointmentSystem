@@ -1140,6 +1140,7 @@ button[class ^= navbar1]:hover{
 	width: 100%;
 	margin-left:10px;
 	margin-right:23px;
+	overflow-x: hidden;
 }
 
   .course-preview {
