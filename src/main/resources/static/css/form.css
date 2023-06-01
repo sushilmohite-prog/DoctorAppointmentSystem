@@ -119,6 +119,8 @@
 }
 
 
+
+
 .formp {
 	font-size: 14px;
 	font-weight: 100;
@@ -320,3 +322,107 @@ button .ghost {
 	height: 40px;
 	width: 40px;
 }
+
+/* Common styles */
+
+/* Rest of the common styles */
+
+/* Add media query for screens up to 768px */
+@media (max-width: 600px) {
+	
+.formlayout{
+	background: #f6f5f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 600px;
+	margin: 50px 0 50px;
+}
+	
+  .container2 {
+    width: 95%;
+    height: auto;
+    margin-top:70px
+  }
+
+  .form-container1 {
+    position: relative;
+    height: auto;
+    transform: none;
+    transition: none;
+    
+  }
+  
+  
+  .signinform {
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	margin-top:10px;
+	height: auto;
+	text-align: center;
+}
+
+.social-container1{
+	display:none;
+}
+
+  .sign-in-container1,
+  .sign-up-container1 {
+    width: 100%;
+    opacity: 1;
+    z-index: 5;
+    animation: none;
+  }
+
+  .container2.right-panel-active1 .sign-in-container1,
+  .container2.right-panel-active1 .sign-up-container1 {
+    transform: none;
+  }
+
+  .overlay-container1 {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: none;
+    transition: none;
+  }
+
+  .container2.right-panel-active1 .overlay-container1 {
+    transform: none;
+  }
+
+  .overlay1 {
+    left: 0;
+    width: 100%;
+    transform: translateX(0);
+    transition: none;
+  }
+
+  .overlay-left1,
+  .overlay-right1 {
+    transform: translateX(0);
+  }
+
+  /* Adjust specific styles for mobile */
+  .formp {
+    font-size: 12px;
+    margin: 15px 0 25px;
+  }
+
+  .forma {
+    margin: 10px 0;
+  }
+
+  .formbutton {
+    padding: 10px 35px;
+    font-size: 10px;
+  }
+}
+
+

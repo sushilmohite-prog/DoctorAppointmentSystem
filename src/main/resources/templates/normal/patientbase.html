@@ -29,95 +29,136 @@
 
 <style>
 .course {
-	background-color: #fff;
-	border-radius: 10px;
-	box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
-	display: flex;
-	max-width: 100%;
-	margin: 20px;
-	overflow: hidden;
-	width: 700px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  max-width: 100%;
+  margin: 20px;
+  overflow: hidden;
+  width: 700px;
 }
 
 .course h6 {
-	opacity: 0.6;
-	letter-spacing: 1px;
-	text-transform: uppercase;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .course h2 {
-	letter-spacing: 1px;
-	margin: 10px 0;
+  letter-spacing: 1px;
+  margin: 10px 0;
 }
 
 .course-preview {
-	background-color: #2A265F;
-	color: #fff;
-	padding: 30px;
-	width: 250px;
+  background-color: #2A265F;
+  color: #fff;
+  padding: 30px;
+  max-width: 250px;
 }
 
 .course-preview a {
-	color: #fff;
-	display: inline-block;
-	font-size: 12px;
-	opacity: 0.6;
-	margin-top: 30px;
-	text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 30px;
+  text-decoration: none;
 }
 
 .course-info {
-	padding: 10px;
-	position: relative;
-	width: 100%;
+  padding: 10px;
+  position: relative;
+  width: 100%;
 }
 
 .progress-container {
-	position: absolute;
-	top: 30px;
-	right: 30px;
-	text-align: right;
-	width: 150px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  text-align: right;
+  width: 150px;
 }
 
 .progress {
-	background-color: #ddd;
-	border-radius: 3px;
-	height: 5px;
-	width: 100%;
+  background-color: #ddd;
+  border-radius: 3px;
+  height: 5px;
+  width: 100%;
 }
 
 .progress::after {
-	border-radius: 3px;
-	background-color: #2A265F;
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 5px;
-	width: 66%;
+  border-radius: 3px;
+  background-color: #2A265F;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 66%;
 }
 
 .progress-text {
-	font-size: 10px;
-	opacity: 1;
-	font-weight: bold;
-	letter-spacing: 1px;
+  font-size: 10px;
+  opacity: 1;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .btn2 {
-	background-color: #2A265F;
-	border: 0;
-	border-radius: 50px;
-	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-	color: #fff;
-	font-size: 16px;
-	padding: 12px 25px;
-	position: absolute;
-	bottom: 30px;
-	right: 30px;
-	letter-spacing: 1px;
+  background-color: #2A265F;
+  border: 0;
+  border-radius: 50px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 25px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  letter-spacing: 1px;
 }
+
+/* Media query for mobile */
+@media (max-width: 600px) {
+  .course {
+    flex-direction: column;
+    width: 100%;
+    margin: 10px;
+  }
+  
+  
+  
+  .courses-container {
+	width: 100%;
+	margin-right:1rem;
+}
+
+  .course-preview {
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .course-info {
+    padding: 20px;
+  }
+
+  .progress-container {
+    position: static;
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .btn2 {
+    position: static;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+
+
 
 /* SOCIAL PANEL CSS */
 .social-panel-container {
@@ -382,6 +423,42 @@
 	font-size: 22px;
 	color: #5078ef;
 	cursor: pointer;
+}
+
+/* Media query for mobile */
+@media (max-width: 600px) {
+
+.wrapper1 {
+  position: relative;
+  top: 50%;
+  left: 43%;
+  transform: translate(-50%, -60%);
+}
+
+.wrapper1 .search_box1 .search_field1 .fas {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #5078ef;
+  cursor: pointer;
+}
+
+  .wrapper1 .search_box1 {
+    flex-wrap: wrap;
+    width:auto;
+    height: auto;
+  }
+
+  
+  .wrapper1 .search_box1 .search_field1 {
+    width: 100%;
+  }
+
+  .wrapper1 .search_box1 .search_field1 .input {
+    padding-right: 20px;
+  }
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
